@@ -1103,6 +1103,22 @@ class VariantSelects extends HTMLElement {
   }
 
   updateMedia(html) {
+    // Selected Variants Code
+    const variantValues = this.currentVariant.options;
+    const mediaGallery = document.querySelector(`[id^="MediaGallery-${this.dataset.section}"]`);
+    if (mediaGallery.hasAttribute('image-grouping-enabled')) {
+      mediaGallery.querySelectorAll('[data-image-group]').forEach((el) => el.classList.add('hide-media'));
+      variantValues.forEach((value) => {
+        mediaGallery
+          .querySelectorAll(`[data-image-group="${value}"]`)
+          .forEach((el) => el.classList.remove('hide-media'));
+      });
+      mediaGallery.querySelectorAll('slider-component').forEach((slider) => {
+        slider.initPages();
+      });
+    }
+    // Selected Variants Code end
+
     const mediaGallerySource = document.querySelector(`[id^="MediaGallery-${this.dataset.section}"] ul`);
     const mediaGalleryDestination = html.querySelector(`[id^="MediaGallery-${this.dataset.section}"] ul`);
 
